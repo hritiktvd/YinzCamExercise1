@@ -21,23 +21,19 @@ public class ChangeBackgroundOnInit : MonoBehaviour
     {
         EventsManager.onFaceDetected += setBackgroundDistance;
         EventsManager.onFaceLost += showFaceMessage;
+        EventsManager.onFilterStart += setBackgroundDistance;
     }
 
     private void OnDisable()
     {
         EventsManager.onFaceDetected -= setBackgroundDistance;
         EventsManager.onFaceLost -= showFaceMessage;
+        EventsManager.onFilterStart -= setBackgroundDistance;
     }
 
-    public void FaceTrackON()
-    {
-        EventsManager.FaceDetected();
-    }
+    public void FaceTrackON() { EventsManager.FaceDetected();}
 
-    public void FaceTrackOFF()
-    {
-        EventsManager.LostFace();
-    }
+    public void FaceTrackOFF() { EventsManager.LostFace();  }
 
     private void setBackgroundDistance()
     {
@@ -53,7 +49,7 @@ public class ChangeBackgroundOnInit : MonoBehaviour
 
     IEnumerator changeBackgroundOnStart()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(3f);
         setBackgroundDistance();
     }
 }
