@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public List<GameObject> UIElements;
 
-    //public RectTransform RacingLight;
-
-    //private int racingLightCount = 5;
+    public List<GameObject> RacingLights;
 
     private void OnEnable()
     {
-        EventsManager.onFilterStart += showInventoryUI;
+        EventsManager.onFilterStart += showRacingUI;
     }
 
     private void OnDisable()
     {
-        EventsManager.onFilterStart += showInventoryUI;
+        EventsManager.onFilterStart += showRacingUI;
     }
 
     private void Start()
@@ -28,6 +27,7 @@ public class UIManager : MonoBehaviour
     public void showStartUI()
     {
         HideAllUI();
+        hideAllLights();
         UIElements[0].SetActive(true);
     }
     public void HideStartUI()
@@ -43,12 +43,12 @@ public class UIManager : MonoBehaviour
         UIElements[1].SetActive(true);
     }
 
-    //private void showRacingUI()
-    //{
-    //    HideAllUI();
-    //    UIElements[2].SetActive(true);
-    //    StartCoroutine(SpawnRacingLight());
-    //}
+    private void showRacingUI()
+    {
+        HideAllUI();
+        UIElements[2].SetActive(true);
+        StartCoroutine(SpawnRacingLight());
+    }
 
 
     private void HideAllUI()
@@ -59,13 +59,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //IEnumerator SpawnRacingLight()
-    //{
-    //    for (var i = 0; i <= racingLightCount; i++)
-    //    {
-    //        yield return new WaitForSeconds(1f);
-    //        Instantiate(RacingLight, new Vector2(RacingLight.anchoredPosition.x + 5f, RacingLight.anchoredPosition.y), RacingLight.transform.rotation);
-    //    }
-    //    showInventoryUI();
-    //}
+    private void hideAllLights() 
+    {
+        foreach (var Light in RacingLights)
+        {
+            Light.SetActive(false);
+        }
+    }
+
+    IEnumerator SpawnRacingLight()
+    {
+        for (var i = 0; i < RacingLights.Count; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            RacingLights[i].SetActive(true);
+        }
+        yield return new WaitForSeconds(1f);
+        hideAllLights();
+        showInventoryUI();
+    }
+
 }
