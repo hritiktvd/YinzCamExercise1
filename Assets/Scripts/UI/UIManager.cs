@@ -6,6 +6,10 @@ public class UIManager : MonoBehaviour
 {
     public List<GameObject> UIElements;
 
+    //public RectTransform RacingLight;
+
+    //private int racingLightCount = 5;
+
     private void OnEnable()
     {
         EventsManager.onFilterStart += showInventoryUI;
@@ -39,6 +43,13 @@ public class UIManager : MonoBehaviour
         UIElements[1].SetActive(true);
     }
 
+    //private void showRacingUI()
+    //{
+    //    HideAllUI();
+    //    UIElements[2].SetActive(true);
+    //    StartCoroutine(SpawnRacingLight());
+    //}
+
 
     private void HideAllUI()
     {
@@ -47,4 +58,14 @@ public class UIManager : MonoBehaviour
             UI.SetActive(false);
         }
     }
+
+    //IEnumerator SpawnRacingLight()
+    //{
+    //    for (var i = 0; i <= racingLightCount; i++)
+    //    {
+    //        yield return new WaitForSeconds(1f);
+    //        Instantiate(RacingLight, new Vector2(RacingLight.anchoredPosition.x + 5f, RacingLight.anchoredPosition.y), RacingLight.transform.rotation);
+    //    }
+    //    showInventoryUI();
+    //}
 }
