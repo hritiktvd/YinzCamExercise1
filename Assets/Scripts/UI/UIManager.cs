@@ -6,22 +6,27 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public List<GameObject> UIElements;
-
+    public GameObject FaceLostBanner;
     public List<GameObject> RacingLights;
 
     private void OnEnable()
     {
         EventsManager.onFilterStart += showRacingUI;
+        EventsManager.onFaceLost += ()=> showFaceMessageUI(true);
+        EventsManager.onFaceDetected += () => showFaceMessageUI(false);
     }
 
     private void OnDisable()
     {
-        EventsManager.onFilterStart += showRacingUI;
+        EventsManager.onFilterStart -= showRacingUI;
+        EventsManager.onFaceLost -= () => showFaceMessageUI(true);
+        EventsManager.onFaceDetected -= () => showFaceMessageUI(false);
     }
 
     private void Start()
     {
         showStartUI();
+        FaceLostBanner.SetActive(false);
     }
 
     public void showStartUI()
@@ -79,4 +84,8 @@ public class UIManager : MonoBehaviour
         showInventoryUI();
     }
 
+    private void showFaceMessageUI(bool activeState)
+    {
+        FaceLostBanner.SetActive(activeState);
+    }
 }

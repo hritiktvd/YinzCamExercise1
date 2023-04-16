@@ -20,14 +20,12 @@ public class ChangeBackgroundOnInit : MonoBehaviour
     private void OnEnable()
     {
         EventsManager.onFaceDetected += setBackgroundDistance;
-        EventsManager.onFaceLost += showFaceMessage;
         EventsManager.onFilterStart += setBackgroundDistance;
     }
 
     private void OnDisable()
     {
         EventsManager.onFaceDetected -= setBackgroundDistance;
-        EventsManager.onFaceLost -= showFaceMessage;
         EventsManager.onFilterStart -= setBackgroundDistance;
     }
 
@@ -40,11 +38,6 @@ public class ChangeBackgroundOnInit : MonoBehaviour
         Debug.Log("Background Distance Changed");
         Background.transform.localPosition = Vector3.zero;
         Background.transform.localPosition = new Vector3(PlayerFaceTracker.transform.position.x + XValue, PlayerFaceTracker.transform.position.y + YValue, PlayerFaceTracker.transform.position.z + ZValue) ;
-    }
-
-    private void showFaceMessage()
-    {
-        Debug.Log("Show Face to Continue!");
     }
 
     IEnumerator changeBackgroundOnStart()
